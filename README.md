@@ -1,4 +1,4 @@
-tk_jtag : Access an Altea FPGA via JTAG
+tk_jtag : Access an Altera FPGA via JTAG
 =======
 
 Based on the work here: http://idle-logic.com/2012/04/15/talking-to-the-de0-nano-using-the-virtual-jtag-interface/
