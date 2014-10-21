@@ -1,7 +1,5 @@
-tk_jtag
+tk_jtag : Access an Altea FPGA via JTAG
 =======
-
-Access Altera FPGA with JTAG and a TclTk Form
 
 Based on the work here: http://idle-logic.com/2012/04/15/talking-to-the-de0-nano-using-the-virtual-jtag-interface/
 
@@ -15,6 +13,8 @@ Files:
 
 After having programmed the FPGA, in order to try the program use quartus_stp.exe with this command:
 
-quartus_stp.exe -t PATH
+
+
+*quartus_stp.exe -t PATH*
 
 where PATH is the path to the form.tcl file, and -t means to use an external Tcl script.
