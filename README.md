@@ -7,12 +7,13 @@ I just added a Tk form to connect to the FPGA and send data via a simple GUI.
 
 ![Alt text](/screenshot.png?raw=true "Form Screenshot")
 
-Files:
-1) form.tcl : the Tcl/Tk form code.
-2) interface_LED.v : Verilog script for the component that manages the incoming data from the JTAG and updates the LEDs.
-3) JTAG_connect.qar : Quartus II project file (for DE0 nano, if you are using something else you will need to change the pin assignment and the FPGA type.
+**Files:**
 
-After having programmed the FPGA, in order to try the program use quartus_stp.exe with this command:
+- *form.tcl* : the Tcl/Tk form code.
+- *interface_LED.v* : Verilog script for the component that manages the incoming data from the JTAG and updates the LEDs.
+- *JTAG_connect.qar* : Quartus II project file (for DE0 nano, if you are using something else you will need to change the pin assignment and the FPGA type.
+
+After having programmed the FPGA, in order to try everything use quartus_stp.exe with this command:
 
 
 
