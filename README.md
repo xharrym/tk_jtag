@@ -8,9 +8,10 @@ I just added a Tk form to connect to the FPGA and send/receive data via a simple
 ![Alt text](/screenshot.png?raw=true "Form Screenshot")
 
 *Command of the form:*
--Connect: connect to the FPGA;
--Update LEDs: send to the FPGA the "binary string" set on the first row of check boxes, and update the LEDs on the DE0-nano accordingly;
--Read Switches Value: receive a "binary string" from the FPGA and visualize it the second row of check boxes (it is the state of the DIP-switches on the DE0-nano)
+
+- Connect: connect to the FPGA;
+- Update LEDs: send to the FPGA the "binary string" set on the first row of check boxes, and update the LEDs on the DE0-nano accordingly;
+- Read Switches Value: receive a "binary string" from the FPGA and visualize it the second row of check boxes (it is the state of the DIP-switches on the DE0-nano)
 
 **Files:**
 
