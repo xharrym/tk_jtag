@@ -1,6 +1,3 @@
-#Tcl/Tk Form used to communicate via JTAG to the FPGA
-#harrym 2014
-
 proc send_data {} {
 	global d0 d1 d2 d3 d4 d5 d6 d7 displayData
 	set led ""
@@ -20,16 +17,29 @@ proc send_data {} {
 
 	open_port
 	device_lock -timeout 10000
-
-	#send instruction "1" ( = update LEDs w/ new data)
-	device_virtual_ir_shift -instance_index 0 -ir_value 1 -no_captured_ir_value
-	#send 8bits of data
-	device_virtual_dr_shift -dr_value $led -instance_index 0  -length 8 -no_captured_dr_value
-	#send instruction "0" ( = bypass)
+	device_virtual_ir_shift -instance_index 0 -ir_value 2 -no_captured_ir_value
+	set l [device_virtual_dr_shift -dr_value $led -instance_index 0  -length 8]
+	puts $l
 	device_virtual_ir_shift -instance_index 0 -ir_value 0 -no_captured_ir_value
-
 	close_port
 }
+
+proc read_switch {} {
+	open_port
+	device_lock -timeout 10000
+	device_virtual_ir_shift -instance_index 0 -ir_value 1 -no_captured_ir_value
+	set dip [device_virtual_dr_shift -dr_value 0000 -instance_index 0 -length 4]
+
+	device_virtual_ir_shift -instance_index 0 -ir_value 0 -no_captured_ir_value
+	close_port
+
+	if {[string index $dip 0] == 1} {.chks0 select} else {.chks0 deselect}
+	if {[string index $dip 1] == 1} {.chks1 select} else {.chks1 deselect}
+	if {[string index $dip 2] == 1} {.chks2 select} else {.chks2 deselect}
+	if {[string index $dip 3] == 1} {.chks3 select} else {.chks3 deselect}
+
+}
+
 proc open_port {} {
 	global usbblaster_name
 	global test_device
@@ -60,16 +70,17 @@ proc connect_jtag {} {
 	}
 	set displayConnect "Connected: $hardware_name \n $device_name"
 	.btnConn configure -state disabled
+	.btnSend configure -state active
+	.btnRead configure -state active
 }
 
 
 global usbblaster_name
 global test_device
 
-set displayData ""
-set  displayConne "Press Connect!"
+set displayData "No Data Sent"
+set  displayConnect "Press Connect!"
 
-#Form Setup
 package require Tk
 init_tk
 
@@ -88,8 +99,15 @@ checkbutton .chk4 -variable d4
 checkbutton .chk5 -variable d5
 checkbutton .chk6 -variable d6
 checkbutton .chk7 -variable d7
-button .btnSend -text "Send Data" -command "send_data"
+button .btnSend -text "Update LEDs" -command "send_data"
 label .lblData -textvariable displayData
+
+frame .frmSwitch
+checkbutton .chks0
+checkbutton .chks1
+checkbutton .chks2
+checkbutton .chks3
+button .btnRead -text "Read Switches Value" -command "read_switch"
 
 grid .frmConnection -in .  -row 1 -column 1 -columnspan 8
 grid .btnConn -in .frmConnection -row 1 -column 1
@@ -104,7 +122,22 @@ grid .chk4 -in .frmData -row 1 -column 5
 grid .chk5 -in .frmData -row 1 -column 6
 grid .chk6 -in .frmData -row 1 -column 7
 grid .chk7 -in .frmData -row 1 -column 8
-grid .btnSend -in .frmData -row 2 -column 1 -columnspan 8
-grid .lblData -in .frmData -row 3 -column 1 -columnspan 8
+grid .btnSend -in .frmData -row 2 -column 1 -columnspan 4
+grid .lblData -in .frmData -row 2 -column 5 -columnspan 4
+
+grid .frmSwitch -in .  -row 3 -column 1
+grid .chks0 -in .frmSwitch -row 1 -column 1
+grid .chks1 -in .frmSwitch -row 1 -column 2
+grid .chks2 -in .frmSwitch -row 1 -column 3
+grid .chks3 -in .frmSwitch -row 1 -column 4
+grid .btnRead -in .frmSwitch -row 1 -column 5 -columnspan 4
+
+.btnSend configure -state disabled
+.btnRead configure -state disabled
+
+.chks0 configure -state disabled
+.chks1 configure -state disabled
+.chks2 configure -state disabled
+.chks3 configure -state disabled
 
 tkwait window .
