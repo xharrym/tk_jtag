@@ -5,7 +5,7 @@ Based on the work here: http://idle-logic.com/2012/04/15/talking-to-the-de0-nano
 
 I just added a Tk form to connect to the FPGA and send/receive data via a simple GUI.
 
-![Alt text](/capture.PNG?raw=true "Form Screenshot")
+![Alt text](/screenshot.png?raw=true "Form Screenshot")
 
 *Command of the form:*
 -Connect: connect to the FPGA;
