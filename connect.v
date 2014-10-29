@@ -1,5 +1,5 @@
 //LEDs interface with JTAG
-//harrym 2014
+//xharrym 2014
 
 //INSTRUCTION:
 //00: bypass
@@ -14,8 +14,8 @@ module connect(
 	);
 
 localparam BYPASS = 2'b00;
-localparam DIP		= 2'b01;
-localparam LED  	= 2'b10;
+localparam DIP	= 2'b01;
+localparam LED  = 2'b10;
 
 input tck, tdi, aclr, v_sdr, v_udr, v_cdr, v_uir;
 input [1:0]ir_in;
@@ -46,34 +46,33 @@ begin
 	else begin
 		case(ir_in)
 			DIP: begin
-						if(v_cdr) begin
-							DR1 = {4'b0000,s4,s3,s2,s1};
-						end
-						else 
-						begin
-							if(v_sdr) begin
-								DR1 = {tdi,DR1[7:1]};
-							end
-						end
+				if(v_cdr) begin
+					DR1 = {4'b0000,s4,s3,s2,s1};
+				end
+				else begin
+					if(v_sdr) begin
+						DR1 = {tdi,DR1[7:1]};
 					end
+				end
+			end
 					
 			LED: begin
-						if(v_sdr) begin
-							DR1 = {tdi,DR1[7:1]};
-						end
-					end
+				if(v_sdr) begin
+					DR1 = {tdi,DR1[7:1]};
+				end
+			end
 						
 			BYPASS: begin
-							if(v_sdr) begin
-									DR0 = {tdi,DR0[1:1]};
-							end
-						end
+					if(v_sdr) begin
+						DR0 = {tdi,DR0[1:1]};
+					end
+			end
 							
 			default: begin
-							if(v_sdr) begin
-								DR0 = {tdi,DR0[1:1]};
-							end
-						end
+					if(v_sdr) begin
+						DR0 = {tdi,DR0[1:1]};
+					end
+			end
 							
 		endcase
 	end
