@@ -29,7 +29,7 @@ proc read_switch {} {
 	device_lock -timeout 10000
 	device_virtual_ir_shift -instance_index 0 -ir_value 1 -no_captured_ir_value
 	set dip [device_virtual_dr_shift -dr_value 0000 -instance_index 0 -length 4]
-
+	
 	device_virtual_ir_shift -instance_index 0 -ir_value 0 -no_captured_ir_value
 	close_port
 
@@ -85,7 +85,7 @@ package require Tk
 init_tk
 
 wm state . normal
-wm title . "LEDs Manager"
+wm title . "FPGA Manager"
 frame .frmConnection
 label .lblConn -textvariable displayConnect
 button .btnConn -text "Connect" -command "connect_jtag"
@@ -103,10 +103,10 @@ button .btnSend -text "Update LEDs" -command "send_data"
 label .lblData -textvariable displayData
 
 frame .frmSwitch
-checkbutton .chks0
-checkbutton .chks1
-checkbutton .chks2
-checkbutton .chks3
+checkbutton .chks0 
+checkbutton .chks1 
+checkbutton .chks2 
+checkbutton .chks3 
 button .btnRead -text "Read Switches Value" -command "read_switch"
 
 grid .frmConnection -in .  -row 1 -column 1 -columnspan 8
